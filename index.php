@@ -38,9 +38,6 @@ session_start();
                 <li class="px-2">
                     <a href="<?php echo PageLoader::load(null,"login") ?>" class="text-md font-bold">로그인</a>
                 </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold">회원가입</a>
-                </li>
             </ul>
         </div>
     </div>

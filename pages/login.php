@@ -23,7 +23,7 @@ require "../vendor/autoload.php";
             </div>
             <ul class="ml-2 self-center flex" style="margin-top: 5px;">
                 <li class="px-2">
-                    <a href="#" class="text-md font-bold text-teal-600">전체글 보기</a>
+                    <a href="#" class="text-md font-bold hover:text-teal-600">전체글 보기</a>
                 </li>
                 <li class="px-2">
                     <a href="#" class="text-md font-bold hover:text-teal-600">질문하기</a>
@@ -36,15 +36,19 @@ require "../vendor/autoload.php";
         <div class="flex">
             <ul class="ml-2 self-center flex">
                 <li class="px-2">
-                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="text-md font-bold">로그인</a>
-                </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold">회원가입</a>
+                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="text-md font-bold text-teal-600">로그인</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="container mx-auto" style="width: 1200px;">
+    <div class="container mx-auto mt-8 bg-white p-4 rounded-lg" style="width:500px;">
+        <h2 class="font-bold text-xl">카카오 로그인</h2>
+        <p class="font-light text-sm">현재 카카오 로그인만 지원 됩니다.</p>
+        <a class="font-bold p-2 rounded-lg text-center mt-4" style="background-color: #FEE500; display: block;">카카오 로그인</a>
+    </div>
+</div>
 <?php \Utils\Asset::loadJs(); ?>
 </body>
 </html>
