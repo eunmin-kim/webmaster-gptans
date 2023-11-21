@@ -3,7 +3,9 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "app/",
+            "Config\\": "config/",
+            "Database\\": "database/"
         }
     },
     "require": {
