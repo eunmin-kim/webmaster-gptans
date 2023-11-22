@@ -26,7 +26,7 @@ session_start();
                     <a href="#" class="text-md font-bold text-teal-600">전체글 보기</a>
                 </li>
                 <li class="px-2">
-                    <a href="#" class="text-md font-bold hover:text-teal-600">질문하기</a>
+                    <a href="<?php echo PageLoader::load(null,'ask') ?>" class="text-md font-bold hover:text-teal-600">질문하기</a>
                 </li>
                 <li class="px-2">
                     <a href="#" class="text-md font-bold hover:text-teal-600">답변하기</a>
