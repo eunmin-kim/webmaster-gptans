@@ -56,7 +56,7 @@ require "../vendor/autoload.php";
         </label>
         <br>
         <textarea name="question_story" class="bg-gray-100 p-1 rounded mt-1" placeholder="질문 내용을 입력해주세요." style="width: 100%;height: 100px;resize:none;" /></textarea>
-        <button class="p-2 mt-2 bg-sky-500 text-white rounded" style="width: 100%">
+        <button type="submit" class="p-2 mt-2 bg-sky-500 text-white rounded" style="width: 100%">
             작성하기
         </button>
     </form>

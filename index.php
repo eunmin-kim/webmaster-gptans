@@ -53,7 +53,7 @@ session_start();
 <!--        실시간 질문글 본문-->
         <div class="mt-4">
 <!--            질문글 박스-->
-            <a class="container p-4 border rounded mb-2" href="#" style="display: block">
+            <a class="container p-4 border rounded mb-2" href="<?php echo PageLoader::load(null,'read') ?>" style="display: block">
                 <h3 class="font-bold mb-1 text-xl">블랙박스 배선 호환문의</h3>
                 <p class="font-light" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 20px;">
                     니즈 x600 블랙박스와 파인뷰 TR20R 제품 배선이 호환 가능할까요?
