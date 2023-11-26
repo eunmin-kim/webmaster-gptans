@@ -1,5 +1,6 @@
 <?php
 require "../vendor/autoload.php";
+require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
 ?>
 
 <!doctype html>

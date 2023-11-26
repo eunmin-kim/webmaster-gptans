@@ -1,7 +1,8 @@
 <?php
 require "vendor/autoload.php";
+require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
 use Utils\PageLoader;
-session_start();
+
 ?>
 
 <!doctype html>

@@ -1,8 +1,9 @@
 <?php
-
+require "../vendor/autoload.php";
+require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
 use Utils\PageLoader;
 
-require "../vendor/autoload.php";
+$kakao = new \App\KakaoLoginController();
 ?>
 <!doctype html>
 <html lang="en">
@@ -46,7 +47,7 @@ require "../vendor/autoload.php";
     <div class="container mx-auto mt-8 bg-white p-4 rounded-lg" style="width:500px;">
         <h2 class="font-bold text-xl">카카오 로그인</h2>
         <p class="font-light text-sm">현재 카카오 로그인만 지원 됩니다.</p>
-        <a class="font-bold p-2 rounded-lg text-center mt-4" style="background-color: #FEE500; display: block;">카카오 로그인</a>
+        <a href="<?php echo $kakao->getAuthorizeUrl(); ?>" class="font-bold p-2 rounded-lg text-center mt-4" style="background-color: #FEE500; display: block;">카카오 로그인</a>
     </div>
 </div>
 <?php \Utils\Asset::loadJs(); ?>
