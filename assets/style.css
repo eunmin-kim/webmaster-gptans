@@ -7,7 +7,7 @@
 @font-face {
     font-family: 'NPSfontBold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
-    font-weight: 500;
+    font-weight: 300;
     font-style: normal;
 }
 nav {
@@ -16,7 +16,5 @@ nav {
 
 }
 body {
-    font-family: 'NPSfontBold';
-    font-weight: 500;
     background-color: #f1f1f1;
 }
