@@ -1,6 +1,8 @@
 <?php
 require "../vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
+$isLoggedIn = isset($_SESSION['kakao_id']);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,6 +15,13 @@ require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
     <title>G식인 - 질문하기</title>
 </head>
 <body>
+<?php
+if ($isLoggedIn == false)
+{
+    echo "<script>alert('로그인 회원만 이용 가능합니다.')</script>";
+    header('Location: http://localhost:2222');
+}
+?>
 <nav class="justify-center bg-white" style="width: 100% !important;">
     <div class="container flex p-6 justify-between rounded-lg mx-auto" style="width:1200px;">
         <div class="flex self-base">
