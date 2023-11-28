@@ -29,9 +29,6 @@ use Utils\PageLoader;
                 <li class="px-2">
                     <a href="<?php echo PageLoader::load(null,'ask') ?>" class="text-md font-bold hover:text-teal-600">질문하기</a>
                 </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold hover:text-teal-600">답변하기</a>
-                </li>
             </ul>
         </div>
         <div class="flex">

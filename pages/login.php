@@ -2,7 +2,6 @@
 require "../vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
 use Utils\PageLoader;
-
 $kakao = new \App\KakaoLoginController();
 ?>
 <!doctype html>
@@ -28,9 +27,6 @@ $kakao = new \App\KakaoLoginController();
                 </li>
                 <li class="px-2">
                     <a href="#" class="text-md font-bold hover:text-teal-600">질문하기</a>
-                </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold hover:text-teal-600">답변하기</a>
                 </li>
             </ul>
         </div>

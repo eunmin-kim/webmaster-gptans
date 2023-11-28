@@ -1,6 +1,8 @@
 <?php
 require "../vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
+$isLoggedIn = isset($_SESSION['kakao_id']);
+
 ?>
 
 <!doctype html>
@@ -27,15 +29,21 @@ require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
                 <li class="px-2">
                     <a href="<?php echo \Utils\PageLoader::load(null,'ask') ?>" class="text-md font-bold hover:text-teal-600">질문하기</a>
                 </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold hover:text-teal-600">답변하기</a>
-                </li>
             </ul>
         </div>
         <div class="flex">
             <ul class="ml-2 self-center flex">
                 <li class="px-2">
-                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="text-md font-bold hover:text-teal-600">로그인</a>
+                    <?php
+                    if ($isLoggedIn == true)
+                    {
+                        echo "<a>로그인 되었습니다.</a>";
+                    }
+                    else
+                    {
+                        echo '<a href="login.php"class="text-md font-bold hover:text-teal-600">로그인</a>';
+                    }
+                    ?>
                 </li>
             </ul>
         </div>
@@ -49,6 +57,14 @@ require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
     <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-lime-500" style="">GPT 답변</span>
     <p class="mt-4">fdsadfsadfafsd</p>
 </div>
+<form class="container mx-auto bg-white mt-8 p-4 rounded-lg" action="" method="post" style="width: 800px;">
+    <input type="hidden" value="<?php  ?>">
+    <label for="answer_story" class="font-bold">답변 작성하기</label>
+    <textarea name="answer_story" class="bg-gray-100 p-1 rounded mt-1" placeholder="답변 내용을 입력해주세요." style="width:100%;height: 100px;resize:none;" /></textarea>
+    <button type="submit" class="p-2 mt-2 bg-sky-500 text-white rounded" style="width: 100%">
+        작성하기
+    </button>
+</form>
 <!--TODO:// 답변은 반복-->
 <div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
     <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-cyan-800" style="">User의 답변</span>

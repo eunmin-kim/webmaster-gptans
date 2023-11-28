@@ -1,8 +1,6 @@
 <?php
 require "../vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,9 +25,6 @@ require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
                 </li>
                 <li class="px-2">
                     <a href="#" class="text-md font-bold text-teal-600">질문하기</a>
-                </li>
-                <li class="px-2">
-                    <a href="#" class="text-md font-bold hover:text-teal-600">답변하기</a>
                 </li>
             </ul>
         </div>
