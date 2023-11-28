@@ -1,4 +1,5 @@
 <?php
-$story = $_POST['']
+
+require $_SERVER["DOCUMENT_ROOT"]."/vendor/autoload.php";
 
 ?>

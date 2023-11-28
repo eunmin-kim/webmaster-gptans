@@ -1,13 +1,13 @@
 <?php
 
 namespace App;
-require "../vendor/autoload.php";
+require $_SERVER["DOCUMENT_ROOT"]."/vendor/autoload.php";
 use Dotenv\Dotenv;
 use GuzzleHttp\Client;
 class GptController
 {
     private string $gptKey;
-    private Client $client;
+    private $client;
     public function __construct()
     {
         $dotenv = Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
@@ -19,15 +19,24 @@ class GptController
     public function sendGpt($title, $story)
     {
         $question = $title.$story."내 질문에 답변해줘.";
-        $res = $this->client('POST','https://api.openai.com/v1/chat/completions',[
-            "model"=> "gpt-3.5-turbo",
-            "messages"=>[
-                "role"=>"user",
-                "content"=>$question
-            ]
+        $allQuestion = [
+        "model"=> "gpt-3.5-turbo",
+        "messages"=>[
+            "role"=>"user",
+            "content"=>$question
+        ]];
+        $jsonQuestion = json_encode($allQuestion);
+        var_dump($jsonQuestion);
+        $res = $this->client->request('POST','https://api.openai.com/v1/chat/completions',
+            [
+                'headers'=> [
+                    'Content-Type'=>'application/json',
+                    'Authorization'=>'Bearer '.$this->gptKey
+                ],
+                'json'=>$allQuestion
+
         ],
-            ['Content-Type'=>'application/json'],
-            ['Authorization'=>'Bearer '.$this->gptKey]
+
         );
         $gptRes = $res->getBody();
         $decodeGptRes = json_decode($gptRes,true);

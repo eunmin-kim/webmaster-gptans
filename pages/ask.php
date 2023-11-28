@@ -47,7 +47,7 @@ if ($isLoggedIn == false)
     </div>
 </nav>
 <div class="container mx-auto" style="width: 800px;">
-    <form class="container mx-auto bg-white mt-8 p-4 rounded-lg" action="" method="post">
+    <form class="container mx-auto bg-white mt-8 p-4 rounded-lg" action="/pages/posts/save_question.php" method="post">
         <label for="question_title" class="font-bold text-lg" style="">
             제목
         </label>

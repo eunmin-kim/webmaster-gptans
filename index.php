@@ -2,6 +2,7 @@
 require "vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
 use Utils\PageLoader;
+$isLoggedIn = isset($_SESSION['kakao_id']);
 
 ?>
 
@@ -34,7 +35,17 @@ use Utils\PageLoader;
         <div class="flex">
             <ul class="ml-2 self-center flex">
                 <li class="px-2">
-                    <a href="<?php echo PageLoader::load(null,"login") ?>" class="text-md font-bold">로그인</a>
+                    <?php
+                    if ($isLoggedIn == true)
+                    {
+                        echo "<a>로그인 되었습니다.</a>";
+                    }
+                    else
+                    {
+                        echo '<a href="'.PageLoader::load(null,"login").'" class="text-md font-bold">로그인</a>';
+                    }
+                    ?>
+
                 </li>
             </ul>
         </div>
