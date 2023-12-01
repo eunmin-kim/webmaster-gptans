@@ -31,7 +31,6 @@ class DB {
         }
         else
         {
-            echo "DB 커넥트 성공";
             $this->connection = $connection;
             mysqli_query($this->connection, "set session character_set_connection=utf8;");
             mysqli_query($this->connection, "set session character_set_results=utf8;");
