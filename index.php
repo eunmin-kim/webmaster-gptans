@@ -14,15 +14,16 @@ $page_num = 6;
 $page = isset($_GET['page'])?$_GET['page']:1;
 
 $start = ($page - 1) * $list_num;
-$sql = "SELECT * FROM questions inner join users on questions.user_id = users.user_id left join answers a on questions.q_id = a.q_id order by questions.q_id desc limit $start, $list_num;";
-$posts_query = mysqli_query($db->connection,$sql);
-$num = mysqli_fetch_row($posts_query);
-$cnt = $start+1;
-$sql2 = "SELECT * FROM questions";
-$total = mysqli_query($db->connection,$sql2);
+$sql = "select * from questions inner join users on questions.user_id - users.user_id order by questions.q_id desc;";
+$posts_query = $db->query($sql);
+$cnt = $start;
+$sql2 = "SELECT * FROM questions;";
+$total = $db->query($sql2);
 $total_row = mysqli_fetch_array($total);
 
-$total_page = ceil(count($total_row)/ $list_num);
+
+$num = ($total_row) == null ? 0 : count($total_row);
+$total_page = ceil($num/ $list_num);
 $total_block = ceil($total_page/$page_num);
 $now_block = ceil($page / $page_num);
 $s_page_num = ($now_block - 1) * $page_num + 1;
@@ -37,7 +38,6 @@ $e_pageNum = $now_block * $page_num;
 if($e_pageNum > $total_page){
     $e_pageNum = $total_page;
 };
-
 ?>
 
 <!doctype html>
@@ -115,10 +115,14 @@ if($e_pageNum > $total_page){
 <!--                </div>-->
 <!--            </a>-->
             <?php
-                while ($arr = mysqli_fetch_array($posts_query))
+                while ($arr = mysqli_fetch_assoc($posts_query))
                 {
-                    ?>
-            <a class="container p-4 border rounded mb-2" href="read.php?page=<?php echo $arr['q_id']; ?>" style="display: block">
+                    $sql3 = "select count(*) as count from questions inner join users on questions.user_id = users.user_id left join answers a on questions.q_id = a.q_id where questions.q_id = ".$arr['q_id']." order by questions.q_id desc;";
+                    $answerQuery = $db->query($sql3);
+                    while ($aaa = mysqli_fetch_assoc($answerQuery))
+                    {
+            ?>
+            <a class="container p-4 border rounded mb-2" href="pages/read.php?page=<?php echo $arr['q_id'] ?>" style="display: block">
                 <h3 class="font-bold mb-1 text-xl"><?php echo $arr['q_title']; ?></h3>
                 <p class="font-light" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 20px;">
                     <?php
@@ -133,10 +137,11 @@ if($e_pageNum > $total_page){
                         GPT 답변완료
                     </div>
                     <div class="ml-2 p-2 bg-sky-400 text-xs rounded self-center text-white">
-                        답변 수 : <?php echo ($arr['a_id'])? $arr['a_id']: 0 ?>
+                        답변 수 : <?php echo ($aaa['count'])? $aaa['count']: 0 ?>
                     </div>
                 </div>
                 <?php }
+                }
             ?>
             </a>
         </div>
@@ -166,15 +171,15 @@ if($e_pageNum > $total_page){
                                 </svg>
                             </a>
                         <?php } else { ?>
-                            <a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                                <span class="sr-only">Next</span>
+                            <a href="#" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Previous</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
                                 </svg>
                             </a>
                         <?php };?>
                         <?php
-                        for($print_page = $s_page_num; $print_page <= $e_pageNum; $print_page++){
+                        for($print_page = $s_page_num; $print_page < $e_pageNum; $print_page++){
                             ?>
                             <a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" href="index.php?page=<?php echo $print_page; ?>"><?php echo $print_page; ?></a>
                         <?php };?>

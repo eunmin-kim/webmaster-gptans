@@ -2,55 +2,62 @@
 
 
 namespace Database;
-require $_SERVER["DOCUMENT_ROOT"]."/vendor/autoload.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
+
 use Dotenv\Dotenv;
+use mysqli;
+use Exception;
 
-class DB {
-
-    private $mysqlHost;
-    private $user;
-    private $password;
-    private $port;
-    private $dbName;
+class DB
+{
     public $connection;
+    private $host;
+    private $username;
+    private $password;
+    private $dbName;
+    private $port;
 
     public function __construct()
     {
+        $this->loadEnvironment();
+        $this->initializeConnection();
+    }
+
+    private function loadEnvironment()
+    {
         $dotenv = Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
         $dotenv->safeLoad();
-        $this->mysqlHost = $_ENV['MYSQL_HOST'];
-        $this->user = $_ENV['MYSQL_USERNAME'];
+        $this->host = $_ENV['MYSQL_HOST'];
+        $this->username = $_ENV['MYSQL_USERNAME'];
         $this->password = $_ENV['MYSQL_PASSWORD'];
-        $this->port = $_ENV['MYSQL_PORT'];
         $this->dbName = $_ENV['MYSQL_DB_NAME'];
-        $connection = mysqli_connect($this->mysqlHost,$this->user,$this->password,$this->dbName);
-
-        if ($connection == false)
-        {
-            throw new Exception("Database Connection Failed");
-        }
-        else
-        {
-            $this->connection = $connection;
-            mysqli_query($this->connection, "set session character_set_connection=utf8;");
-            mysqli_query($this->connection, "set session character_set_results=utf8;");
-            mysqli_query($this->connection, "set session character_set_client=utf8;");
-        }
+        $this->port = $_ENV['MYSQL_PORT'] ?? 3306; // 기본 포트 설정
     }
 
-    public function query(string $sql)
+    private function initializeConnection()
     {
-        mysqli_query($this->connection, "set session character_set_connection=utf8;");
-        mysqli_query($this->connection, "set session character_set_results=utf8;");
-        mysqli_query($this->connection, "set session character_set_client=utf8;");
-        mysqli_query($this->connection,$sql);
-        return;
+        $this->connection = new mysqli($this->host, $this->username, $this->password, $this->dbName, $this->port);
+
+        if ($this->connection->connect_error) {
+            throw new Exception("Database Connection Failed: " . $this->connection->connect_error);
+        }
+
+        $this->setCharset("utf8");
     }
 
-//    public function queryResult(string $sql)
-//    {
-//        $result = mysqli_query($this->connection,$sql);
-//        return
-//    }
+    private function setCharset($charset)
+    {
+        $this->connection->set_charset($charset);
+    }
+
+    public function query($sql)
+    {
+        $this->setCharset("utf8");
+        return $this->connection->query($sql);
+    }
+
+    // 기타 필요한 메소드 추가
 }
+
+
 ?>

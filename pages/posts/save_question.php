@@ -19,11 +19,11 @@ $gptResult = $gptController->sendGpt($title,$story);
 $db = new DB();
 
 //$user_id = $db->queryResult("SELECT user_id FROM users where kakao_user_id = {$kakao_id}");
-$result = mysqli_query($db->connection,"SELECT user_id FROM users where kakao_user_id = {$kakao_id}");
+$result = $db->query("SELECT user_id FROM users where kakao_user_id = {$kakao_id}");
 $row = mysqli_fetch_assoc($result);
 //var_dump($row['user_id']);
 $user_id = $row['user_id'];
-mysqli_query($db->connection,"insert into questions values (null,'{$title}','{$story}',{$user_id})");
+$db->query("insert into questions values (null,'{$title}','{$story}',{$user_id})");
 $question_id = $db->connection->insert_id;
 // GPT 답변 저장
 $gptId = mysqli_query($db->connection, "select user_id from users where kakao_nickname = 'GPT' ");

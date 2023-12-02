@@ -1,7 +1,21 @@
 <?php
 require "../vendor/autoload.php";
 require $_SERVER['DOCUMENT_ROOT'].'/session_manager.php';
+use Database\DB;
 $isLoggedIn = isset($_SESSION['kakao_id']);
+$questionId = $_GET["page"];
+$sql = "SELECT * FROM questions where q_id = $questionId";
+$db = new DB();
+$query = $db->query($sql);
+$row = mysqli_fetch_array($query);
+
+$db2 = new DB();
+$gptSql = "SELECT * FROM answers where user_id = 2";
+$gptQuery = $db2->query($gptSql);
+$gptRow= mysqli_fetch_assoc($gptQuery);
+
+$answersSql = "SELECT * FROM answers inner join users on answers.user_id = users.user_id where q_id = $questionId and answers.user_id != 2 order by a_id desc";
+$answerQuery = $db->query($answersSql);
 
 ?>
 
@@ -50,19 +64,19 @@ $isLoggedIn = isset($_SESSION['kakao_id']);
     </div>
 </nav>
 <div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
-    <span class="bg-gray-500 p-1 text-white text-center rounded font-bold text-xl" style="">질문</span> <h2 class="text-xl font-bold" style="display: inline">블랙박스 배선 호환문의</h2>
-    <p class="mt-4">니즈 x600 블랙박스와 파인뷰 TR20R 제품 배선이 호환 가능할까요? 오래된거라 둘다 모두 설명서도없고..</p>
+    <span class="bg-gray-500 p-1 text-white text-center rounded font-bold text-xl" style="">질문</span> <h2 class="text-xl font-bold" style="display: inline"><?php echo $row['q_title'] ?></h2>
+    <p class="mt-4"><?php echo $row['q_story'] ?></p>
 </div>
 <div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
     <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-lime-500" style="">GPT 답변</span>
-    <p class="mt-4">fdsadfsadfafsd</p>
+    <p class="mt-4"><?php echo $gptRow['a_story'] ?></p>
 </div>
 <!--답변 작성 폼-->
 <?php
     if ($isLoggedIn == true)
     {
-        print '<form class="container mx-auto bg-white mt-8 p-4 rounded-lg" action="" method="post" style="width: 800px;">
-    <input type="hidden" value="<?php  ?>">
+        echo '<form class="container mx-auto bg-white mt-8 p-4 rounded-lg" action="/pages/posts/save_answer.php" method="post" style="width: 800px;">
+    <input name="post_id" type="hidden" value="'.$questionId.'">
     <label for="answer_story" class="font-bold">답변 작성하기</label>
     <textarea name="answer_story" class="bg-gray-100 p-1 rounded mt-1" placeholder="답변 내용을 입력해주세요." style="width:100%;height: 100px;resize:none;" /></textarea>
     <button type="submit" class="p-2 mt-2 bg-sky-500 text-white rounded" style="width: 100%">
@@ -73,15 +87,18 @@ $isLoggedIn = isset($_SESSION['kakao_id']);
 ?>
 
 <!--TODO:// 답변은 반복-->
-<div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
-    <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-cyan-800" style="">User의 답변</span>
-    <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-rose-700" style="">채택</span>
-    <p class="mt-4">fdsadfsadfafsd</p>
-</div>
-<div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
-    <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-cyan-800" style="">User2의 답변</span>
-    <p class="mt-4">fdsadfsadfafsd</p>
-</div>
+
+<?php
+    while ($answerRow = mysqli_fetch_assoc($answerQuery))
+    {
+        echo '<div class="container mx-auto bg-white rounded mt-4 p-4" style="width: 800px;">
+    <span class="p-1 text-white text-center rounded font-bold text-xl px-2 bg-cyan-800" style="">'.$answerRow['kakao_nickname'].'의 답변</span>
+    <p class="mt-4">'.$answerRow['a_story'].'</p>
+</div>';
+    }
+
+?>
+
 
 <!--TODO: 페이지네이션 추가-->
 <?php echo \Utils\Asset::loadJs(); ?>
