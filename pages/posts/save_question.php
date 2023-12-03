@@ -30,4 +30,5 @@ $gptId = mysqli_query($db->connection, "select user_id from users where kakao_ni
 $gptIdRow = mysqli_fetch_assoc($gptId);
 $gptId = $gptIdRow['user_id'];
 mysqli_query($db->connection,"insert into answers values (null,'{$gptResult}',{$question_id},{$gptId})");
+header("Location: http://localhost:2222/pages/read.php?page=$question_id");
 ?>
