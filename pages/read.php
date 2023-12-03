@@ -10,11 +10,11 @@ $query = $db->query($sql);
 $row = mysqli_fetch_array($query);
 
 $db2 = new DB();
-$gptSql = "SELECT * FROM answers where user_id = 2";
+$gptSql = "SELECT * FROM answers where user_id = 1";
 $gptQuery = $db2->query($gptSql);
 $gptRow= mysqli_fetch_assoc($gptQuery);
 
-$answersSql = "SELECT * FROM answers inner join users on answers.user_id = users.user_id where q_id = $questionId and answers.user_id != 2 order by a_id desc";
+$answersSql = "SELECT * FROM answers inner join users on answers.user_id = users.user_id where q_id = $questionId and answers.user_id != 1 order by a_id desc";
 $answerQuery = $db->query($answersSql);
 
 ?>

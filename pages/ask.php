@@ -40,7 +40,16 @@ if ($isLoggedIn == false)
         <div class="flex">
             <ul class="ml-2 self-center flex">
                 <li class="px-2">
-                    <a href="<?php echo $_SERVER['REQUEST_URI'] ?>" class="text-md font-bold hover:text-teal-600">로그인</a>
+                    <?php
+                    if ($isLoggedIn == true)
+                    {
+                        echo "<a>로그인 되었습니다.</a>";
+                    }
+                    else
+                    {
+                        echo '<a href="'.PageLoader::load(null,"login").'" class="text-md font-bold">로그인</a>';
+                    }
+                    ?>
                 </li>
             </ul>
         </div>

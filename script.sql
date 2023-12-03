@@ -22,7 +22,7 @@ create table answers
 (
     a_id    bigint auto_increment
         primary key,
-    a_story varchar(200) not null,
+    a_story LONGTEXT not null,
     q_id    bigint       null,
     user_id bigint       null,
     constraint answers___fk
@@ -30,5 +30,7 @@ create table answers
     constraint answers_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
+
+insert into users values (null,'GPT','99999999',null);
 
 
