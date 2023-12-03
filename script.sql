@@ -12,7 +12,7 @@ create table questions
     q_id    bigint auto_increment
         primary key,
     q_title varchar(200) not null,
-    q_story varchar(200) not null,
+    q_story varchar(250) not null,
     user_id bigint       null,
     constraint questions_users_user_id_fk
         foreign key (user_id) references users (user_id)
