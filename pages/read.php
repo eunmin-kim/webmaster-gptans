@@ -10,7 +10,7 @@ $query = $db->query($sql);
 $row = mysqli_fetch_array($query);
 
 $db2 = new DB();
-$gptSql = "SELECT * FROM answers where user_id = 1";
+$gptSql = "SELECT * FROM answers where user_id = 1 and q_id = $questionId";
 $gptQuery = $db2->query($gptSql);
 $gptRow= mysqli_fetch_assoc($gptQuery);
 

@@ -14,7 +14,7 @@ $page_num = 6;
 $page = isset($_GET['page'])?$_GET['page']:1;
 
 $start = ($page - 1) * $list_num;
-$sql = "select * from questions inner join users on questions.user_id - users.user_id order by questions.q_id desc;";
+$sql = "select * from questions inner join users on questions.user_id where kakao_nickname != 'GPT' order by questions.q_id desc;";
 $posts_query = $db->query($sql);
 $cnt = $start;
 $sql2 = "SELECT * FROM questions;";
